@@ -73,32 +73,6 @@
       "children": ["learn-the-basics", "making-layouts", "responsive-design"],
       "questions": [
         {
-          "id": "d142eb02-3f90-4ccf-82e3-940d7b10a5a5",
-          "question": "What does CSS stand for?",
-          "description": "Choose the correct expansion for the acronym CSS.",
-          "difficulty": 0,
-          "options": [
-            {
-              "label": "A",
-              "description": "Counter Style Sheet",
-              "points": 0,
-              "explanation": "Incorrect. This is not the correct expansion for CSS."
-            },
-            {
-              "label": "B",
-              "description": "Cascading Style Sheet",
-              "points": 3,
-              "explanation": "Correct! CSS stands for Cascading Style Sheet."
-            },
-            {
-              "label": "C",
-              "description": "Computer Style Sheet",
-              "points": 0,
-              "explanation": "Incorrect. This is not the correct expansion for CSS."
-            }
-          ]
-        },
-        {
           "id": "6e98e3f9-3af6-4703-b1bf-89f7b2cf3c23",
           "question": "What is the primary purpose of CSS?",
           "description": "Select the option that best describes the main role of CSS in web development.",
