@@ -85,8 +85,8 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: npm run build
-      # - name: Bypass nojekyll
-      #   run: touch ./out/.nojekyll
+      - name: Bypass nojekyll
+        run: touch ./out/.nojekyll
       # - name: Gh pages
       #   run: |
       #     git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
