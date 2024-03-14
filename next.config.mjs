@@ -14,6 +14,6 @@ export default (phase, { defaultConfig }) => {
   return {
     ...defaultConfig,
     output: 'export',
-    basePath: '/questionnaire-app',
+    basePath: '/quetionnaire',
   }
 }
