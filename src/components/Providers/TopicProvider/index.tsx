@@ -3,10 +3,17 @@
 import { createContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+interface SelectTopicParams {
+  id?: string
+  current: TopicState
+  previousParents?: string[]
+  isManualQuestionnaire?: boolean
+}
 export interface TopicsContextValue {
+  manualQuestionnaire?: boolean
+  switchManualQuestionnaire?: () => void
   currentTopic?: TopicState
-  selectTopic?: (id: string, current: TopicState, previousParents: string[]) => void
-  goBack?: (current: TopicState) => void
+  selectTopic?: (params: SelectTopicParams) => void
   startQuestionnaire?: () => void
   cancelQuestionnaire?: () => void
   completeQuestionnaire?: () => void
@@ -30,7 +37,7 @@ interface Topic {
   isCompleted?: boolean
 }
 
-type TopicState = Topic & { previousParents: string[] }
+type TopicState = Topic & { previousParents?: string[] }
 
 const initialTopic: Topic = {
   id: 'development',
@@ -46,11 +53,17 @@ export function TopicsProvider({
   children: React.ReactNode
 }) {
   const router = useRouter()
+  const [manualQuestionnaire, setManualQuestionnaire] = useState(false)
   const [allTopics, setAllTopics] = useState([...topics, initialTopic])
   const [currentTopic, setCurrentTopic] = useState<TopicState>({
     ...initialTopic,
     previousParents: [],
   })
+
+  const switchManualQuestionnaire = () => {
+    router.push('/development')
+    setManualQuestionnaire(!manualQuestionnaire)
+  }
 
   const refreshAllTopics = (current: TopicState) => {
     setAllTopics(
@@ -58,11 +71,16 @@ export function TopicsProvider({
     )
   }
 
-  const selectTopic = (
-    id: string,
-    current: TopicState,
-    previousParents: string[]
-  ) => {
+  const selectTopic = ({
+    id,
+    current,
+    previousParents,
+    isManualQuestionnaire,
+  }: SelectTopicParams) => {
+    if (isManualQuestionnaire) {
+      setCurrentTopic(current)
+    }
+
     if (!id) return
 
     refreshAllTopics(current)
@@ -81,23 +99,6 @@ export function TopicsProvider({
         questions: selectedTopic.questions,
       })
     }
-  }
-
-  const goBack = (current: TopicState) => {
-    if (!current.previousParents.length) return
-
-    const parent = current.previousParents.pop()
-
-    const selectedTopic = allTopics.find((topic) => topic.id === parent)
-
-    setCurrentTopic({
-      id: selectedTopic.id,
-      previousParents: current.previousParents,
-      children: selectedTopic.children,
-      description: selectedTopic.description,
-      resources: selectedTopic.resources,
-      questions: selectedTopic.questions,
-    })
   }
 
   const startQuestionnaire = () => {
@@ -148,9 +149,10 @@ export function TopicsProvider({
   return (
     <TopicsContext.Provider
       value={{
+        manualQuestionnaire,
+        switchManualQuestionnaire,
         currentTopic,
         selectTopic,
-        goBack,
         startQuestionnaire,
         cancelQuestionnaire,
         saveQuestionAnswer,

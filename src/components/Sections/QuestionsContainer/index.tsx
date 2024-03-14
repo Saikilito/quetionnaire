@@ -1,6 +1,6 @@
 'use client'
 import { useContext, useEffect, useState } from 'react'
-import { Button, TopicsContext } from '../..'
+import { Button, ResourcesContainer, TopicsContext } from '../..'
 import { Question } from './Question'
 
 const getClosestUnansweredQuestion = (questions: any[]) => {
@@ -22,6 +22,8 @@ export const QuestionsContainer = () => {
     saveQuestionAnswer,
     completeQuestionnaire,
     resetQuestionnaire,
+    manualQuestionnaire,
+    switchManualQuestionnaire,
   } = useContext(TopicsContext)
   const { questions = [] } = currentTopic!
   const [currentQuestion, setCurrentQuestion] = useState(
@@ -120,12 +122,18 @@ export const QuestionsContainer = () => {
                 classes="max-w-[150px]"
                 type="secondary"
                 onClick={() => {
+                  manualQuestionnaire && switchManualQuestionnaire!()
                   completeQuestionnaire!()
                 }}
               >
                 NO
               </Button>
             </div>
+
+            <ResourcesContainer
+              resources={currentTopic?.resources}
+              title="Do you want to learn more? Take a look to these links"
+            />
           </div>
         </div>
       ) : (

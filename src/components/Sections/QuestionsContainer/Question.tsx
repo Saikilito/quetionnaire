@@ -40,7 +40,7 @@ export const Question = ({ question, saveAnswer }: QuestionProps) => {
               className={`mt-4 max-w-[60%] select-none ${getOptionBg(
                 question.data.answer,
                 option
-              )} p-1 rounded cursor-pointer flex justify-between`}
+              )} p-2 rounded cursor-pointer flex justify-between items-center`}
               onClick={
                 !question.data.answer
                   ? () => {
@@ -61,28 +61,16 @@ export const Question = ({ question, saveAnswer }: QuestionProps) => {
               </span>
               {!question?.data?.answer &&
                 confirmAnswer === `${question?.data?.id}_${option.label}` && (
-                  <div className="flex justify-evenly items-center w-full max-w-[250px]">
-                    <Button
-                      classes="max-w-[100px] h-[24px]"
-                      type="primary"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        saveAnswer(question.data.id, option.label)
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                    <Button
-                      classes="max-w-[100px] h-[24px]"
-                      type="secondary"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        setConfirmAnswer(question?.data?.id)
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
+                  <Button
+                    classes="max-w-[100px] h-[24px]"
+                    type="primary"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      saveAnswer(question.data.id, option.label)
+                    }}
+                  >
+                    Confirm
+                  </Button>
                 )}
             </li>
           )

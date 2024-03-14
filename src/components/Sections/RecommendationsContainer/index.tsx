@@ -8,7 +8,7 @@ export const RecommendationsContainer = () => {
   const { currentTopic } = useContext(TopicsContext)
   return (
     <div className="flex flex-col w-full">
-      {!!currentTopic?.previousParents.length && (
+      {!!currentTopic?.previousParents?.length && (
         <Button
           type="secondary"
           classes="max-w-[50%]"

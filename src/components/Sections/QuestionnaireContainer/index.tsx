@@ -1,10 +1,19 @@
 import { useContext } from 'react'
-import { Button, QuestionsContainer, ResourcesContainer, TopicsContext } from '../..'
+import {
+  Button,
+  QuestionnaireDescription,
+  QuestionsContainer,
+  TopicsContext,
+} from '../..'
 import { capitalize } from '@/utils'
 
 export const QuestionnaireContainer = () => {
-  const { currentTopic, startQuestionnaire, cancelQuestionnaire } =
-    useContext(TopicsContext)
+  const {
+    currentTopic,
+    startQuestionnaire,
+    cancelQuestionnaire,
+    switchManualQuestionnaire,
+  } = useContext(TopicsContext)
   return (
     <div className="flex flex-col w-full">
       <div className="flex justify-between items-center">
@@ -20,30 +29,20 @@ export const QuestionnaireContainer = () => {
             Cancel
           </Button>
         ) : (
-          <></>
+          <Button
+            type="primary"
+            classes="max-w-[150px]"
+            onClick={() => {
+              switchManualQuestionnaire!()
+            }}
+          >
+            Upload file
+          </Button>
         )}
       </div>
 
       {!currentTopic?.startedQuestionnaire ? (
-        <>
-          <p className="mt-4 text-lg">{currentTopic?.description}</p>
-
-          <ResourcesContainer resources={currentTopic?.resources} />
-
-          {!!currentTopic?.questions?.length && (
-            <div className="flex justify-center mt-4">
-              <Button
-                type="primary"
-                classes="max-w-[60%]"
-                onClick={() => {
-                  startQuestionnaire!()
-                }}
-              >
-                START QUESTIONNAIRE
-              </Button>
-            </div>
-          )}
-        </>
+        <QuestionnaireDescription />
       ) : (
         <>
           <QuestionsContainer />
